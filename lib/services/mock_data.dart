@@ -23,12 +23,27 @@ class MockData {
   static const List<Product> featuredProducts = [
     Product(
       id: 'p1',
-      name: 'Lenovo Legion Pro 7',
+      name: 'MacBook Pro M1',
       imageUrl:
           'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=800&q=80',
+      images: [
+        'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=1200&q=80',
+        'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80',
+        'https://images.unsplash.com/photo-1516387938699-a93567ec168e?auto=format&fit=crop&w=1200&q=80',
+      ],
       price: 1499.0,
+      originalPrice: 1749.0,
       rating: 4.7,
       category: 'Laptops',
+      tags: ['NEW GENERATION'],
+      description:
+          'The ultimate gaming and productivity laptop with a powerful CPU and GPU, advanced cooling, and premium display.',
+      specs: {
+        'CORES / THREADS': '8c / 16t',
+        'BASE / BOOST CLOCK': '3.2 / 5.0 GHz',
+        'TOTAL CACHE (L2+L3)': '32 MB',
+        'DEFAULT TDP': '95W',
+      },
     ),
     Product(
       id: 'p2',
