@@ -36,4 +36,4 @@ flutter run
 
 - Mock data lives in `lib/services/mock_data.dart`.
 - Local storage is handled in `lib/services/local_storage_service.dart`.
-- The Search and Cart tabs are placeholders for future module integration.
+- The Search tab is a placeholder for future module integration.
