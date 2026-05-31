@@ -11,7 +11,7 @@ Authentication, Home, and Profile modules built with Flutter Material 3.
 
 ## Project Structure
 
-```
+```sh
 lib/
 ├── main.dart
 ├── models/
@@ -27,7 +27,7 @@ lib/
 
 ## Run
 
-```
+```sh
 flutter pub get
 flutter run
 ```
