@@ -76,6 +76,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
     });
 
     final profileProvider = context.read<ProfileProvider>();
+    final authProvider = context.read<AuthProvider>();
+
     await profileProvider.updateProfile(
       UserProfile(
         fullName: _nameController.text.trim(),
@@ -84,7 +86,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ),
     );
 
-    final authProvider = context.read<AuthProvider>();
     await authProvider.login(
       email: _emailController.text.trim(),
       password: _passwordController.text,
