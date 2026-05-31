@@ -1,17 +1,39 @@
-# computology
+# Computology Modules
 
-A new Flutter project.
+Authentication, Home, and Profile modules built with Flutter Material 3.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+- Authentication: Login, Register, Forgot Password (form validation + routing)
+- Home: Banner carousel, category chips, featured products grid, bottom nav
+- Profile: View profile, edit profile, settings shortcuts, logout
+- Bonus: Dark mode toggle and local storage via SharedPreferences
 
-A few resources to get you started if this is your first Flutter project:
+## Project Structure
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+```
+lib/
+├── main.dart
+├── models/
+├── providers/
+├── screens/
+│   ├── auth/
+│   ├── home/
+│   └── profile/
+├── services/
+├── utils/
+└── widgets/
+```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Run
+
+```
+flutter pub get
+flutter run
+```
+
+## Notes
+
+- Mock data lives in `lib/services/mock_data.dart`.
+- Local storage is handled in `lib/services/local_storage_service.dart`.
+- The Search and Cart tabs are placeholders for future module integration.
