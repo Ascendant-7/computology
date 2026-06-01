@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'features/auth/logic/auth_provider.dart';
-import 'features/profile/logic/profile_provider.dart';
-import 'core/theme/theme_provider.dart';
-import 'features/cart/logic/cart_provider.dart';
-import 'features/auth/presentation/forgot_password_screen.dart';
-import 'features/auth/presentation/login_screen.dart';
-import 'features/auth/presentation/register_screen.dart';
-import 'features/catalog/presentation/home_root_screen.dart';
-import 'features/profile/presentation/edit_profile_screen.dart';
-import 'core/network/local_storage_service.dart';
-import 'core/utils/app_routes.dart';
-import 'core/theme/app_theme.dart';
+import 'providers/auth_provider.dart';
+import 'providers/profile_provider.dart';
+import 'providers/theme_provider.dart';
+import 'providers/cart_provider.dart';
+import 'screens/auth/forgot_password_screen.dart';
+import 'screens/auth/login_screen.dart';
+import 'screens/auth/register_screen.dart';
+import 'screens/home/home_root_screen.dart';
+import 'screens/profile/edit_profile_screen.dart';
+import 'services/local_storage_service.dart';
+import 'utils/app_routes.dart';
+import 'utils/app_theme.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
