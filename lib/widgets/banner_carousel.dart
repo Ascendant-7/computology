@@ -29,7 +29,7 @@ class BannerCarousel extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   gradient: LinearGradient(
-                    colors: [Colors.black.withOpacity(0.6), Colors.transparent],
+                    colors: [Colors.black.withValues(alpha: 0.6), Colors.transparent],
                     begin: Alignment.bottomLeft,
                     end: Alignment.topRight,
                   ),

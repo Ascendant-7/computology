@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'cart_placeholder_screen.dart';
 import 'home_screen.dart';
 import 'search_placeholder_screen.dart';
+import 'cart_screen.dart';
 import '../profile/profile_screen.dart';
 
 class HomeRootScreen extends StatefulWidget {
@@ -15,17 +15,26 @@ class HomeRootScreen extends StatefulWidget {
 class _HomeRootScreenState extends State<HomeRootScreen> {
   int _currentIndex = 0;
 
-  final List<Widget> _screens = const [
-    HomeScreen(),
-    SearchPlaceholderScreen(),
-    CartPlaceholderScreen(),
-    ProfileScreen(),
-  ];
+  void _goToHomeTab() {
+    setState(() {
+      _currentIndex = 0;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    final screens = [
+      const HomeScreen(),
+      const SearchPlaceholderScreen(),
+      CartScreen(
+        onBrowseProducts: _goToHomeTab,
+        onContinueShopping: _goToHomeTab,
+      ),
+      const ProfileScreen(),
+    ];
+
     return Scaffold(
-      body: _screens[_currentIndex],
+      body: screens[_currentIndex],
       bottomNavigationBar: NavigationBar(
         selectedIndex: _currentIndex,
         onDestinationSelected: (index) {
