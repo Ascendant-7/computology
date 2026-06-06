@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:computology/features/catalog/data/product.dart';
+import '../../features/catalog/data/product.dart';
 import '../utils/app_constants.dart';
-import 'package:computology/features/catalog/presentation/product_detail_screen.dart';
+import '../../features/catalog/presentation/product_detail_screen.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({super.key, required this.product});

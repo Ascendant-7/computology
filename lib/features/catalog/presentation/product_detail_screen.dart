@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:computology/features/catalog/data/product.dart';
-import 'package:computology/features/cart/logic/cart_provider.dart';
+import '../data/product.dart';
+import '../../cart/logic/cart_provider.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   final Product product;

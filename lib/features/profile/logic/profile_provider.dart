@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:computology/features/profile/data/user_profile.dart';
-import 'package:computology/core/network/local_storage_service.dart';
-import 'package:computology/core/network/mock_data.dart';
+import '../data/user_profile.dart';
+import '../../../core/network/local_storage_service.dart';
+import '../../../core/network/mock_data.dart';
 
 class ProfileProvider extends ChangeNotifier {
   ProfileProvider() {

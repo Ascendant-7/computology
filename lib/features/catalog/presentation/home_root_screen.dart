@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'home_screen.dart';
 import 'search_placeholder_screen.dart';
-import 'package:computology/features/cart/presentation/cart_screen.dart';
-import 'package:computology/features/profile/presentation/profile_screen.dart';
+import '../../cart/presentation/cart_screen.dart';
+import '../../profile/presentation/profile_screen.dart';
 
 class HomeRootScreen extends StatefulWidget {
   const HomeRootScreen({super.key});

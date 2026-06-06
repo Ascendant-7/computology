@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:computology/features/auth/logic/auth_provider.dart';
-import 'package:computology/features/profile/logic/profile_provider.dart';
-import 'package:computology/core/theme/theme_provider.dart';
-import 'package:computology/core/utils/app_constants.dart';
-import 'package:computology/core/utils/app_routes.dart';
-import 'package:computology/core/widgets/profile_menu_item.dart';
+import '../../auth/logic/auth_provider.dart';
+import '../logic/profile_provider.dart';
+import '../../../core/theme/theme_provider.dart';
+import '../../../core/utils/app_constants.dart';
+import '../../../core/utils/app_routes.dart';
+import '../../../core/widgets/profile_menu_item.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});

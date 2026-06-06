@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:computology/core/utils/app_constants.dart';
-import 'package:computology/core/widgets/app_text_field.dart';
-import 'package:computology/core/widgets/primary_button.dart';
+import '../../../core/utils/app_constants.dart';
+import '../../../core/widgets/app_text_field.dart';
+import '../../../core/widgets/primary_button.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});

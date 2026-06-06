@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'package:computology/core/network/mock_data.dart';
-import 'package:computology/core/utils/app_constants.dart';
-import 'package:computology/core/widgets/banner_carousel.dart';
-import 'package:computology/core/widgets/category_chip.dart';
-import 'package:computology/core/widgets/product_card.dart';
-import 'package:computology/core/widgets/section_header.dart';
+import '../../../core/network/mock_data.dart';
+import '../../../core/utils/app_constants.dart';
+import '../../../core/widgets/banner_carousel.dart';
+import '../../../core/widgets/category_chip.dart';
+import '../../../core/widgets/product_card.dart';
+import '../../../core/widgets/section_header.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

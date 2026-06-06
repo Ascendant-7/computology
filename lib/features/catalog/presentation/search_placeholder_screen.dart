@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:computology/core/network/mock_data.dart';
-import 'package:computology/features/catalog/data/product.dart';
-import 'package:computology/core/widgets/product_card.dart';
+import '../../../core/network/mock_data.dart';
+import '../data/product.dart';
+import '../../../core/widgets/product_card.dart';
 
 class SearchPlaceholderScreen extends StatefulWidget {
   const SearchPlaceholderScreen({super.key});

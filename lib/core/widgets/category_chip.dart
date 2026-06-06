@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:computology/features/catalog/data/category.dart';
+import '../../features/catalog/data/category.dart';
 
 class CategoryChip extends StatelessWidget {
   const CategoryChip({super.key, required this.category});

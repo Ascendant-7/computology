@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:computology/features/profile/data/user_profile.dart';
-import 'package:computology/features/auth/logic/auth_provider.dart';
-import 'package:computology/features/profile/logic/profile_provider.dart';
-import 'package:computology/core/network/mock_data.dart';
-import 'package:computology/core/utils/app_constants.dart';
-import 'package:computology/core/widgets/app_text_field.dart';
-import 'package:computology/core/utils/app_routes.dart';
-import 'package:computology/core/widgets/primary_button.dart';
+import '../../profile/data/user_profile.dart';
+import '../logic/auth_provider.dart';
+import '../../profile/logic/profile_provider.dart';
+import '../../../core/network/mock_data.dart';
+import '../../../core/utils/app_constants.dart';
+import '../../../core/widgets/app_text_field.dart';
+import '../../../core/utils/app_routes.dart';
+import '../../../core/widgets/primary_button.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});

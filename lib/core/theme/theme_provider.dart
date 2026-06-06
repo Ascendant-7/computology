@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:computology/core/network/local_storage_service.dart';
+import '../network/local_storage_service.dart';
 
 class ThemeProvider extends ChangeNotifier {
   ThemeProvider() {

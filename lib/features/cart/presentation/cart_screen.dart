@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:computology/core/utils/app_constants.dart';
-import 'package:computology/core/widgets/primary_button.dart';
-import 'package:computology/core/widgets/section_header.dart';
+import '../../../core/utils/app_constants.dart';
+import '../../../core/widgets/primary_button.dart';
+import '../../../core/widgets/section_header.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({

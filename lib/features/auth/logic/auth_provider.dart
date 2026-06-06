@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:computology/core/network/local_storage_service.dart';
+import '../../../core/network/local_storage_service.dart';
 
 class AuthProvider extends ChangeNotifier {
   AuthProvider() {
