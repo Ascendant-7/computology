@@ -22,10 +22,7 @@ class CartScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Cart'),
         actions: [
-          TextButton(
-            onPressed: () {},
-            child: const Text('Clear'),
-          ),
+          TextButton(onPressed: () {}, child: const Text('Clear')),
           const SizedBox(width: 8),
         ],
       ),
@@ -45,7 +42,9 @@ class CartScreen extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     radius: 24,
-                    backgroundColor: colorScheme.onPrimaryContainer.withValues(alpha: 0.12),
+                    backgroundColor: colorScheme.onPrimaryContainer.withValues(
+                      alpha: 0.12,
+                    ),
                     child: Icon(
                       Icons.shopping_cart_outlined,
                       color: colorScheme.onPrimaryContainer,
@@ -128,10 +127,7 @@ class CartScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 24),
-            PrimaryButton(
-              label: 'Proceed to Checkout',
-              onPressed: null,
-            ),
+            PrimaryButton(label: 'Proceed to Checkout', onPressed: null),
             const SizedBox(height: 12),
             Center(
               child: TextButton(
@@ -160,9 +156,9 @@ class _SummaryRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textStyle = isEmphasized
-        ? Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.w700,
-            )
+        ? Theme.of(
+            context,
+          ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700)
         : Theme.of(context).textTheme.bodyLarge;
 
     return Row(

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:computology/features/catalog/data/category.dart';
-import 'package:computology/features/catalog/data/product.dart';
-import 'package:computology/features/profile/data/user_profile.dart';
+import '../../features/catalog/data/category.dart';
+import '../../features/catalog/data/product.dart';
+import '../../features/profile/data/user_profile.dart';
 
 class MockData {
   static const List<String> bannerImages = [
@@ -77,7 +77,6 @@ class MockData {
   static const UserProfile defaultProfile = UserProfile(
     fullName: 'Taylor Morgan',
     email: 'taylor.morgan@computology.com',
-    photoUrl:
-        'https://avatars.githubusercontent.com/u/152673822?v=4',
+    photoUrl: 'https://avatars.githubusercontent.com/u/152673822?v=4',
   );
 }
