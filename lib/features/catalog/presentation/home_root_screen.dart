@@ -4,6 +4,7 @@ import 'home_screen.dart';
 import 'search_placeholder_screen.dart';
 import 'package:computology/features/cart/presentation/cart_screen.dart';
 import 'package:computology/features/profile/presentation/profile_screen.dart';
+import 'package:computology/features/pc_builder/pc_builder_screen.dart';
 
 class HomeRootScreen extends StatefulWidget {
   const HomeRootScreen({super.key});
@@ -32,6 +33,7 @@ class HomeRootScreenState extends State<HomeRootScreen> {
     final screens = [
       const HomeScreen(),
       const SearchPlaceholderScreen(),
+      const PCBuilderScreen(),
       CartScreen(
         onBrowseProducts: goToHomeTab,
         onContinueShopping: goToHomeTab,
@@ -51,6 +53,7 @@ class HomeRootScreenState extends State<HomeRootScreen> {
         destinations: const [
           NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
           NavigationDestination(icon: Icon(Icons.search), label: 'Search'),
+          NavigationDestination(icon: Icon(Icons.computer), label: 'Builder'),
           NavigationDestination(icon: Icon(Icons.shopping_cart), label: 'Cart'),
           NavigationDestination(icon: Icon(Icons.person), label: 'Profile'),
         ],
