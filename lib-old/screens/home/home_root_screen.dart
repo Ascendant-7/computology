@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'home_screen.dart';
 import 'search_placeholder_screen.dart';
+import 'pc_builder_screen.dart';
 import 'cart_screen.dart';
 import '../profile/profile_screen.dart';
 
@@ -26,6 +27,7 @@ class _HomeRootScreenState extends State<HomeRootScreen> {
     final screens = [
       const HomeScreen(),
       const SearchPlaceholderScreen(),
+      const PCBuilderScreen(),
       CartScreen(
         onBrowseProducts: _goToHomeTab,
         onContinueShopping: _goToHomeTab,
@@ -45,6 +47,7 @@ class _HomeRootScreenState extends State<HomeRootScreen> {
         destinations: const [
           NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
           NavigationDestination(icon: Icon(Icons.search), label: 'Search'),
+          NavigationDestination(icon: Icon(Icons.computer), label: 'Builder'),
           NavigationDestination(icon: Icon(Icons.shopping_cart), label: 'Cart'),
           NavigationDestination(icon: Icon(Icons.person), label: 'Profile'),
         ],
