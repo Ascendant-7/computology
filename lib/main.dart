@@ -9,6 +9,7 @@ import 'screens/auth/forgot_password_screen.dart';
 import 'screens/auth/login_screen.dart';
 import 'screens/auth/register_screen.dart';
 import 'screens/home/home_root_screen.dart';
+import 'screens/home/pc_builder_screen.dart';
 import 'screens/profile/edit_profile_screen.dart';
 import 'services/local_storage_service.dart';
 import 'utils/app_routes.dart';
@@ -45,6 +46,7 @@ class MyApp extends StatelessWidget {
               AppRoutes.register: (_) => const RegisterScreen(),
               AppRoutes.forgotPassword: (_) => const ForgotPasswordScreen(),
               AppRoutes.home: (_) => const HomeRootScreen(),
+              AppRoutes.pcBuilder: (_) => const PCBuilderScreen(),
               AppRoutes.editProfile: (_) => const EditProfileScreen(),
             },
             home: authProvider.isLoggedIn

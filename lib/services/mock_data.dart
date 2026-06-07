@@ -49,7 +49,7 @@ class MockData {
       id: 'p2',
       name: 'Apple MacBook Pro 14',
       imageUrl:
-          'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80',
+          'https://www.apple.com/newsroom/images/2025/10/apple-unveils-new-14-inch-macbook-pro-powered-by-the-m5-chip/tile/Apple-MacBook-Pro-14-in-hero-251015-lp.jpg.news_app_ed.jpg',
       price: 1999.0,
       rating: 4.9,
       category: 'Laptops',
