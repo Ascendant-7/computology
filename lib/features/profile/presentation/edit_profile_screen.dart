@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import 'package:computology/features/profile/data/user_profile.dart';
@@ -61,7 +62,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     await context.read<ProfileProvider>().updateProfile(updated);
 
     if (!mounted) return;
-    Navigator.pop(context);
+    context.pop();
   }
 
   @override
