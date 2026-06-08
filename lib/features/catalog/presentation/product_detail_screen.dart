@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:computology/features/catalog/data/product.dart';
 import 'package:computology/features/cart/logic/cart_provider.dart';
@@ -181,7 +182,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           duration: const Duration(seconds: 2),
                           action: SnackBarAction(
                             label: 'View Cart',
-                            onPressed: () => Navigator.of(context).pop('cart'),
+                            onPressed: () => context.pop('cart'),
                           ),
                         ),
                       );

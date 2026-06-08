@@ -4,17 +4,11 @@ import 'package:computology/core/widgets/section_header.dart';
 import 'package:computology/features/cart/logic/cart_provider.dart';
 import 'package:computology/features/cart/widgets/index.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class CartScreen extends StatelessWidget {
-  const CartScreen({
-    super.key,
-    required this.onBrowseProducts,
-    required this.onContinueShopping,
-  });
-
-  final VoidCallback onBrowseProducts;
-  final VoidCallback onContinueShopping;
+  const CartScreen({ super.key });
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +34,7 @@ class CartScreen extends StatelessWidget {
             return SingleChildScrollView(
               padding: const EdgeInsets.all(AppConstants.pagePadding),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const CartHeaderBanner(
                     title: 'Your cart is empty',
@@ -49,12 +43,12 @@ class CartScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 24),
                   EmptyCartState(
-                    onBrowseProducts: onBrowseProducts,
+                    onBrowseProducts: () => context.go(AppRoutes.home),
                   ),
                   const SizedBox(height: 24),
                   Center(
                     child: TextButton(
-                      onPressed: onContinueShopping,
+                      onPressed: () => context.go(AppRoutes.home),
                       child: const Text('Continue shopping'),
                     ),
                   ),
@@ -152,12 +146,12 @@ class CartScreen extends StatelessWidget {
                   shipping: '\$0',
                   tax: '\$0',
                   total: '\$${cart.total.toStringAsFixed(0)}',
-                  onProceedToCheckout: () => Navigator.pushNamed(context, AppRoutes.checkout),
+                  onProceedToCheckout: () => context.push(AppRoutes.checkout),
                 ),
                 const SizedBox(height: 24),
                 Center(
                   child: TextButton(
-                    onPressed: onContinueShopping,
+                    onPressed: () => context.go(AppRoutes.home),
                     child: const Text('Continue shopping'),
                   ),
                 ),
