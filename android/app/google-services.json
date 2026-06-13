@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "65061542918",
+    "project_id": "computology-9952d",
+    "storage_bucket": "computology-9952d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:65061542918:android:bf9ce8a69a1fc68784f787",
+        "android_client_info": {
+          "package_name": "com.example.computology"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrxOVVPbz-wBMu2B44Irs6T0eROD_wca8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
