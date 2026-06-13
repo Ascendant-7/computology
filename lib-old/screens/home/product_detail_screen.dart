@@ -6,7 +6,7 @@ import '../../providers/cart_provider.dart';
 class ProductDetailScreen extends StatefulWidget {
   final Product product;
 
-  const ProductDetailScreen({super.key, required this.product});
+  const ProductDetailScreen({Key? key, required this.product}) : super(key: key);
 
   @override
   State<ProductDetailScreen> createState() => _ProductDetailScreenState();
@@ -56,7 +56,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
                 itemCount: images.length,
-                separatorBuilder: (_, _) => const SizedBox(width: 8),
+                separatorBuilder: (_, __) => const SizedBox(width: 8),
                 itemBuilder: (context, idx) {
                   return GestureDetector(
                     onTap: () => setState(() => _selectedImage = idx),
@@ -84,7 +84,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                 decoration: BoxDecoration(
-                  color: Colors.teal.withValues(alpha: 0.08),
+                  color: Colors.teal.withOpacity(0.08),
                   borderRadius: BorderRadius.circular(6),
                 ),
                 child: Text(
@@ -193,6 +193,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 const SizedBox(width: 12),
                 OutlinedButton(
                   onPressed: () {
+                    // TODO: wishlist handling
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Wishlist added')));
                   },
                   style: OutlinedButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 14), side: BorderSide(color: Colors.teal[800]!)),
