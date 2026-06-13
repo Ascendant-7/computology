@@ -134,7 +134,7 @@ class _PCBuilderScreenState extends State<PCBuilderScreen> {
             ),
             const SizedBox(height: 12),
             DropdownButtonFormField<PCComponent>(
-              initialValue: selectedComponent,
+              value: selectedComponent,
               hint: Text('Select $label'),
               items: components.map((component) {
                 return DropdownMenuItem(
@@ -163,7 +163,7 @@ class _PCBuilderScreenState extends State<PCBuilderScreen> {
   Widget _buildSummaryCard() {
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 12),
-      color: Theme.of(context).primaryColor.withValues(alpha: 0.1),
+      color: Theme.of(context).primaryColor.withOpacity(0.1),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
