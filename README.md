@@ -1,14 +1,6 @@
-# Computology
+# Computology Modules
 
-A E-commerce mobile application for a computer shop built in Flutter. It features product catalog, cart management and order tracking.
-
-## Members
-
-| No | Name | ID | Role |
-| -- | ---- | -- | ---- |
-| 1 | Ang Panha | e20221707 | Team Lead |
-| 2 | Et Anchhy | e20220608 | Member |
-| 3 | Thou Laiheng | e20220843 | Member |
+Authentication, Home, and Profile modules built with Flutter Material 3.
 
 ## Features
 
@@ -20,19 +12,17 @@ A E-commerce mobile application for a computer shop built in Flutter. It feature
 ## Project Structure
 
 ```sh
-lib
-├── app.dart
-├── core
-│   ├── network
-│   ├── theme
-│   ├── utils
-│   └── widgets
-├── features
-│   ├── auth
-│   ├── cart
-│   ├── catalog
-│   └── profile
-└── main.dart
+lib/
+├── main.dart
+├── models/
+├── providers/
+├── screens/
+│   ├── auth/
+│   ├── home/
+│   └── profile/
+├── services/
+├── utils/
+└── widgets/
 ```
 
 ## Run
