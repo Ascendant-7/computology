@@ -1,6 +1,4 @@
-import 'package:computology/core/utils/app_routes.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import 'package:computology/core/utils/app_constants.dart';
@@ -30,7 +28,7 @@ class CheckoutScreen extends StatelessWidget {
                   const SizedBox(height: 24),
                   PrimaryButton(
                     label: 'Go back',
-                    onPressed: () => context.pop(),
+                    onPressed: () => Navigator.pop(context),
                   ),
                 ],
               ),
@@ -140,7 +138,7 @@ class CheckoutScreen extends StatelessWidget {
                           duration: const Duration(seconds: 2),
                         ),
                       );
-                      context.go(AppRoutes.home);
+                      Navigator.of(context).popUntil((route) => route.isFirst);
                     },
                   ),
                   const SizedBox(height: 24),

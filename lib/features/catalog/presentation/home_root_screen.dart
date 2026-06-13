@@ -1,0 +1,63 @@
+import 'package:flutter/material.dart';
+
+import 'home_screen.dart';
+import 'search_placeholder_screen.dart';
+import 'package:computology/features/cart/presentation/cart_screen.dart';
+import 'package:computology/features/profile/presentation/profile_screen.dart';
+import 'package:computology/features/pc_builder/pc_builder_screen.dart';
+
+class HomeRootScreen extends StatefulWidget {
+  const HomeRootScreen({super.key});
+
+  @override
+  State<HomeRootScreen> createState() => HomeRootScreenState();
+}
+
+class HomeRootScreenState extends State<HomeRootScreen> {
+  int _currentIndex = 0;
+
+  void goToHomeTab() {
+    setState(() {
+      _currentIndex = 0;
+    });
+  }
+
+  void goToCart() {
+    setState(() {
+      _currentIndex = 2;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final screens = [
+      const HomeScreen(),
+      const SearchPlaceholderScreen(),
+      const PCBuilderScreen(),
+      CartScreen(
+        onBrowseProducts: goToHomeTab,
+        onContinueShopping: goToHomeTab,
+      ),
+      const ProfileScreen(),
+    ];
+
+    return Scaffold(
+      body: screens[_currentIndex],
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: _currentIndex,
+        onDestinationSelected: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+        destinations: const [
+          NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
+          NavigationDestination(icon: Icon(Icons.search), label: 'Search'),
+          NavigationDestination(icon: Icon(Icons.computer), label: 'Builder'),
+          NavigationDestination(icon: Icon(Icons.shopping_cart), label: 'Cart'),
+          NavigationDestination(icon: Icon(Icons.person), label: 'Profile'),
+        ],
+      ),
+    );
+  }
+}

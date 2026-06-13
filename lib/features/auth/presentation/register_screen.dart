@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import 'package:computology/features/profile/data/user_profile.dart';
@@ -98,7 +97,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
       _isSubmitting = false;
     });
 
-    context.go(AppRoutes.home);
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      AppRoutes.home,
+      (route) => false,
+    );
   }
 
   @override
@@ -203,7 +206,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   const Text('Already have an account?'),
                   TextButton(
                     onPressed: () {
-                      context.pop();
+                      Navigator.pop(context);
                     },
                     child: const Text('Sign in'),
                   ),

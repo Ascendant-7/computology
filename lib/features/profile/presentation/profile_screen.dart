@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import 'package:computology/features/auth/logic/auth_provider.dart';
@@ -55,7 +54,7 @@ class ProfileScreen extends StatelessWidget {
                     icon: Icons.edit,
                     label: 'Edit Profile',
                     onTap: () {
-                      context.push(AppRoutes.editProfile);
+                      Navigator.pushNamed(context, AppRoutes.editProfile);
                     },
                   ),
                   ProfileMenuItem(
@@ -74,7 +73,11 @@ class ProfileScreen extends StatelessWidget {
                     onTap: () async {
                       await context.read<AuthProvider>().logout();
                       if (!context.mounted) return;
-                      context.go(AppRoutes.login);
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        AppRoutes.login,
+                        (route) => false,
+                      );
                     },
                   ),
                 ],

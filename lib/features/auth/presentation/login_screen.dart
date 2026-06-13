@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import 'package:computology/features/auth/logic/auth_provider.dart';
@@ -71,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if (!mounted) return;
 
     if (success) {
-      context.go(AppRoutes.home);
+      Navigator.pushReplacementNamed(context, AppRoutes.home);
     } else {
       ScaffoldMessenger.of(
         context,
@@ -145,7 +144,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 alignment: Alignment.centerRight,
                 child: TextButton(
                   onPressed: () {
-                    context.push(AppRoutes.forgotPassword);
+                    Navigator.pushNamed(context, AppRoutes.forgotPassword);
                   },
                   child: const Text('Forgot Password?'),
                 ),
@@ -157,7 +156,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   const Text('New here?'),
                   TextButton(
                     onPressed: () {
-                      context.push(AppRoutes.register);
+                      Navigator.pushNamed(context, AppRoutes.register);
                     },
                     child: const Text('Create account'),
                   ),

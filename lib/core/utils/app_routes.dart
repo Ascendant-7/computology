@@ -7,7 +7,4 @@ class AppRoutes {
   static const editProfile = '/profile/edit';
   static const checkout = '/checkout';
   static const pcBuilder = '/pc-builder';
-  static const cart = '/cart';
-  static const search = '/search';
-  static const productDetail = '/product';
 }

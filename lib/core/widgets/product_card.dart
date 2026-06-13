@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:computology/features/catalog/data/product.dart';
-import 'package:go_router/go_router.dart';
+import 'package:computology/features/catalog/presentation/home_root_screen.dart';
+import 'package:computology/features/catalog/presentation/product_detail_screen.dart';
 import '../utils/app_constants.dart';
 
 class ProductCard extends StatelessWidget {
@@ -52,12 +53,18 @@ class ProductCard extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: OutlinedButton(
-                onPressed: () async {
-                  final result = await context.push<String>('/product', extra: product);
-                  if (!context.mounted) return;
-                  if (result == 'cart') {
-                    context.go('/cart');
-                  }
+                onPressed: () {
+                  final homeState = context.findAncestorStateOfType<HomeRootScreenState>();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ProductDetailScreen(product: product),
+                    ),
+                  ).then((result) {
+                    if (result == 'cart') {
+                      homeState?.goToCart();
+                    }
+                  });
                 },
                 child: const Text('View Details'),
               ),
