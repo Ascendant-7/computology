@@ -10,7 +10,6 @@ import 'features/auth/presentation/login_screen.dart';
 import 'features/auth/presentation/register_screen.dart';
 import 'features/cart/logic/cart_provider.dart';
 import 'features/catalog/presentation/home_root_screen.dart';
-import 'features/checkout/presentation/checkout_screen.dart';
 import 'features/profile/logic/profile_provider.dart';
 import 'features/profile/presentation/edit_profile_screen.dart';
 
@@ -40,7 +39,6 @@ class MyApp extends StatelessWidget {
               AppRoutes.home: (_) => const HomeRootScreen(),
               AppRoutes.forgotPassword: (_) => const ForgotPasswordScreen(),
               AppRoutes.editProfile: (_) => const EditProfileScreen(),
-              AppRoutes.checkout: (_) => const CheckoutScreen(),
             },
             home: authProvider.isLoggedIn
                 ? const HomeRootScreen()

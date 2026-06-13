@@ -9,21 +9,15 @@ class HomeRootScreen extends StatefulWidget {
   const HomeRootScreen({super.key});
 
   @override
-  State<HomeRootScreen> createState() => HomeRootScreenState();
+  State<HomeRootScreen> createState() => _HomeRootScreenState();
 }
 
-class HomeRootScreenState extends State<HomeRootScreen> {
+class _HomeRootScreenState extends State<HomeRootScreen> {
   int _currentIndex = 0;
 
-  void goToHomeTab() {
+  void _goToHomeTab() {
     setState(() {
       _currentIndex = 0;
-    });
-  }
-
-  void goToCart() {
-    setState(() {
-      _currentIndex = 2;
     });
   }
 
@@ -33,8 +27,8 @@ class HomeRootScreenState extends State<HomeRootScreen> {
       const HomeScreen(),
       const SearchPlaceholderScreen(),
       CartScreen(
-        onBrowseProducts: goToHomeTab,
-        onContinueShopping: goToHomeTab,
+        onBrowseProducts: _goToHomeTab,
+        onContinueShopping: _goToHomeTab,
       ),
       const ProfileScreen(),
     ];

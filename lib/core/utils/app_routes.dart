@@ -5,5 +5,4 @@ class AppRoutes {
   static const home = '/home';
   static const profile = '/profile';
   static const editProfile = '/profile/edit';
-  static const checkout = '/checkout';
 }

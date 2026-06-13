@@ -181,7 +181,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           duration: const Duration(seconds: 2),
                           action: SnackBarAction(
                             label: 'View Cart',
-                            onPressed: () => Navigator.of(context).pop('cart'),
+                            onPressed: () {
+                              Navigator.of(context).popUntil((route) => route.isFirst);
+                            },
                           ),
                         ),
                       );
