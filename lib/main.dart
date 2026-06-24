@@ -1,12 +1,12 @@
-import 'package:flutter/material.dart';
+import 'package:computology/core/services/firebase_service.dart';
+import 'package:flutter/material.dart' show WidgetsFlutterBinding, runApp;
 import 'core/network/local_storage_service.dart';
 import 'app.dart';
 
 Future<void> main() async {
-  // flutter initialization
   WidgetsFlutterBinding.ensureInitialized();
-  // custom initialization
   await LocalStorageService.init();
-  // app run
+  await FirebaseService.init();
+
   runApp(const MyApp());
 }
