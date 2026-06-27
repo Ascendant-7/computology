@@ -7,7 +7,8 @@ import 'package:computology/features/catalog/data/product.dart';
 import 'package:computology/features/catalog/presentation/product_detail_screen.dart';
 import 'package:computology/features/catalog/presentation/search_placeholder_screen.dart';
 import 'package:computology/features/checkout/presentation/checkout_screen.dart';
-import 'package:computology/features/pc_builder/pc_builder_screen.dart';
+import 'package:computology/features/catalog/presentation/favorites_screen.dart';
+import 'package:computology/features/pc_builder/presentation/pc_builder_screen.dart';
 import 'package:computology/features/profile/presentation/edit_profile_screen.dart';
 import 'package:computology/features/profile/presentation/profile_screen.dart';
 import 'package:go_router/go_router.dart';
@@ -34,6 +35,7 @@ GoRouter createGoRouter(AuthProvider authProvider) {
       GoRoute(path: AppRoutes.forgotPassword, builder: (_, _) => const ForgotPasswordScreen()),
       GoRoute(path: AppRoutes.checkout, builder: (_, _) => const CheckoutScreen()),
       GoRoute(path: AppRoutes.editProfile, builder: (_, _) => const EditProfileScreen()),
+      GoRoute(path: AppRoutes.favorites, builder: (_, _) => const FavoritesScreen()),
       GoRoute(path: AppRoutes.productDetail, builder: (_, state) => ProductDetailScreen(product: state.extra as Product,)),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navshell) {

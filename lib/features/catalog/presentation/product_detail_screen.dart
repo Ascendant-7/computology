@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:computology/features/catalog/data/product.dart';
 import 'package:computology/features/cart/logic/cart_provider.dart';
+import 'package:computology/features/catalog/logic/favorites_provider.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   final Product product;
@@ -190,12 +191,32 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   ),
                 ),
                 const SizedBox(width: 12),
-                OutlinedButton(
-                  onPressed: () {
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Wishlist added')));
+                Consumer<FavoritesProvider>(
+                  builder: (context, favProvider, _) {
+                    final isFav = favProvider.isFavorite(widget.product.id);
+                    return OutlinedButton(
+                      onPressed: () {
+                        final added = favProvider.toggleFavorite(widget.product);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              added
+                                  ? 'Added to favorites'
+                                  : 'Removed from favorites',
+                            ),
+                          ),
+                        );
+                      },
+                      style: OutlinedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        side: BorderSide(color: Colors.teal[800]!),
+                      ),
+                      child: Icon(
+                        isFav ? Icons.favorite : Icons.favorite_border,
+                        color: isFav ? Colors.red : Colors.teal,
+                      ),
+                    );
                   },
-                  style: OutlinedButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 14), side: BorderSide(color: Colors.teal[800]!)),
-                  child: const Icon(Icons.favorite_border, color: Colors.teal),
                 ),
               ],
             ),
