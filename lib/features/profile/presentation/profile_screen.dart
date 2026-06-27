@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import 'package:computology/features/auth/logic/auth_provider.dart';
+import 'package:computology/features/catalog/logic/favorites_provider.dart';
 import 'package:computology/features/profile/logic/profile_provider.dart';
 import 'package:computology/core/theme/theme_provider.dart';
 import 'package:computology/core/utils/app_constants.dart';
@@ -16,6 +17,7 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final profile = context.watch<ProfileProvider>().profile;
     final themeProvider = context.watch<ThemeProvider>();
+    final favCount = context.watch<FavoritesProvider>().count;
 
     return Scaffold(
       appBar: AppBar(
@@ -56,6 +58,13 @@ class ProfileScreen extends StatelessWidget {
                     label: 'Edit Profile',
                     onTap: () {
                       context.push(AppRoutes.editProfile);
+                    },
+                  ),
+                  ProfileMenuItem(
+                    icon: Icons.favorite,
+                    label: 'My Favorites${favCount > 0 ? ' ($favCount)' : ''}',
+                    onTap: () {
+                      context.push(AppRoutes.favorites);
                     },
                   ),
                   ProfileMenuItem(

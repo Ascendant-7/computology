@@ -1,55 +1,12 @@
 import 'package:flutter/material.dart';
 
-/// Model class for PC components
-class PCComponent {
-  final String id;
-  final String name;
-  final double price;
+import 'package:computology/features/pc_builder/data/pc_component.dart';
+import 'package:computology/features/pc_builder/data/pc_component_data.dart';
+import 'package:computology/features/pc_builder/logic/compatibility_service.dart';
+import 'package:computology/features/pc_builder/presentation/compatibility_result_sheet.dart';
 
-  PCComponent({required this.id, required this.name, required this.price});
-}
-
-/// Provides sample component data for PC Builder
-class PCComponentData {
-  static final List<PCComponent> cpus = [
-    PCComponent(id: 'cpu1', name: 'Ryzen 5 7600', price: 220),
-    PCComponent(id: 'cpu2', name: 'Ryzen 7 7800X3D', price: 399),
-    PCComponent(id: 'cpu3', name: 'Intel i5-14600K', price: 320),
-  ];
-
-  static final List<PCComponent> motherboards = [
-    PCComponent(id: 'mb1', name: 'B650 Gaming', price: 180),
-    PCComponent(id: 'mb2', name: 'X670 Aorus', price: 320),
-    PCComponent(id: 'mb3', name: 'Z790 MSI', price: 280),
-  ];
-
-  static final List<PCComponent> gpus = [
-    PCComponent(id: 'gpu1', name: 'RTX 4060', price: 299),
-    PCComponent(id: 'gpu2', name: 'RTX 4070 Super', price: 599),
-    PCComponent(id: 'gpu3', name: 'RX 7800 XT', price: 499),
-  ];
-
-  static final List<PCComponent> rams = [
-    PCComponent(id: 'ram1', name: '16GB DDR5', price: 65),
-    PCComponent(id: 'ram2', name: '32GB DDR5', price: 120),
-  ];
-
-  static final List<PCComponent> storages = [
-    PCComponent(id: 'storage1', name: '1TB NVMe SSD', price: 70),
-    PCComponent(id: 'storage2', name: '2TB NVMe SSD', price: 130),
-  ];
-
-  static final List<PCComponent> powerSupplies = [
-    PCComponent(id: 'psu1', name: '650W Gold', price: 90),
-    PCComponent(id: 'psu2', name: '750W Gold', price: 120),
-  ];
-
-  static final List<PCComponent> cases = [
-    PCComponent(id: 'case1', name: 'NZXT H5', price: 90),
-    PCComponent(id: 'case2', name: 'Corsair 4000D', price: 100),
-  ];
-}
-
+/// PC Builder screen that lets users select components, check compatibility,
+/// and save a build.
 class PCBuilderScreen extends StatefulWidget {
   const PCBuilderScreen({super.key});
 
@@ -67,7 +24,16 @@ class _PCBuilderScreenState extends State<PCBuilderScreen> {
   PCComponent? selectedPowerSupply;
   PCComponent? selectedCase;
 
-  /// Calculate total price of selected components
+  /// The most recent compatibility check result, if any.
+  CompatibilityResult? _lastResult;
+
+  final CompatibilityService _compatibilityService = CompatibilityService();
+
+  // ---------------------------------------------------------------------------
+  // Price & count helpers
+  // ---------------------------------------------------------------------------
+
+  /// Calculate total price of selected components.
   double _calculateTotalPrice() {
     double total = 0;
     if (selectedCPU != null) total += selectedCPU!.price;
@@ -80,7 +46,7 @@ class _PCBuilderScreenState extends State<PCBuilderScreen> {
     return total;
   }
 
-  /// Count number of selected components
+  /// Count number of selected components.
   int _getComponentCount() {
     int count = 0;
     if (selectedCPU != null) count++;
@@ -93,24 +59,63 @@ class _PCBuilderScreenState extends State<PCBuilderScreen> {
     return count;
   }
 
-  /// Show success snackbar when PC build is saved
+  /// True when at least one component is selected.
+  bool get _hasAnySelection => _getComponentCount() > 0;
+
+  // ---------------------------------------------------------------------------
+  // Actions
+  // ---------------------------------------------------------------------------
+
+  /// Run compatibility checks and show the result bottom sheet.
+  void _checkCompatibility() {
+    final result = _compatibilityService.checkCompatibility(
+      cpu: selectedCPU,
+      motherboard: selectedMotherboard,
+      gpu: selectedGPU,
+      ram: selectedRAM,
+      storage: selectedStorage,
+      psu: selectedPowerSupply,
+      pcCase: selectedCase,
+    );
+
+    setState(() => _lastResult = result);
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (_) => CompatibilityResultSheet(result: result),
+    );
+  }
+
+  /// Save the build (only allowed when the last check was compatible).
   void _savePCBuild() {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text('PC Build Saved Successfully'),
+        content: Text('PC Build Saved Successfully!'),
         duration: Duration(seconds: 2),
         backgroundColor: Colors.green,
       ),
     );
   }
 
-  /// Build component selector card
+  /// Called whenever any dropdown changes — invalidate the last result so the
+  /// user must re-check before saving.
+  void _onSelectionChanged() {
+    setState(() => _lastResult = null);
+  }
+
+  // ---------------------------------------------------------------------------
+  // Widget builders
+  // ---------------------------------------------------------------------------
+
+  /// Build a dropdown selector card for a component category.
   Widget _buildComponentSelector(
     String label,
     IconData icon,
     List<PCComponent> components,
     PCComponent? selectedComponent,
-    Function(PCComponent?) onChanged,
+    ValueChanged<PCComponent?> onChanged,
   ) {
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 8),
@@ -139,10 +144,13 @@ class _PCBuilderScreenState extends State<PCBuilderScreen> {
               items: components.map((component) {
                 return DropdownMenuItem(
                   value: component,
-                  child: Text('${component.name} - \$${component.price}'),
+                  child: Text('${component.name} — \$${component.price.toStringAsFixed(0)}'),
                 );
               }).toList(),
-              onChanged: onChanged,
+              onChanged: (value) {
+                onChanged(value);
+                _onSelectionChanged();
+              },
               decoration: InputDecoration(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
@@ -159,7 +167,7 @@ class _PCBuilderScreenState extends State<PCBuilderScreen> {
     );
   }
 
-  /// Build summary card showing selected components and pricing
+  /// Build summary card showing selected components and pricing.
   Widget _buildSummaryCard() {
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 12),
@@ -169,9 +177,17 @@ class _PCBuilderScreenState extends State<PCBuilderScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Build Summary',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            Row(
+              children: [
+                const Expanded(
+                  child: Text(
+                    'Build Summary',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                if (_lastResult != null)
+                  _CompatibilityBadge(result: _lastResult!),
+              ],
             ),
             const SizedBox(height: 12),
             _buildSummaryItem('Components', '${_getComponentCount()}/7'),
@@ -216,7 +232,7 @@ class _PCBuilderScreenState extends State<PCBuilderScreen> {
     );
   }
 
-  /// Build individual summary item row
+  /// Build individual summary item row.
   Widget _buildSummaryItem(String label, String value) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
@@ -224,14 +240,28 @@ class _PCBuilderScreenState extends State<PCBuilderScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(label),
-          Text(value, style: const TextStyle(fontWeight: FontWeight.w500)),
+          Flexible(
+            child: Text(
+              value,
+              style: const TextStyle(fontWeight: FontWeight.w500),
+              textAlign: TextAlign.end,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
         ],
       ),
     );
   }
 
+  // ---------------------------------------------------------------------------
+  // Build
+  // ---------------------------------------------------------------------------
+
   @override
   Widget build(BuildContext context) {
+    final bool canSave =
+        _lastResult != null && _lastResult!.isCompatible;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('PC Builder'),
@@ -251,7 +281,8 @@ class _PCBuilderScreenState extends State<PCBuilderScreen> {
             style: TextStyle(fontSize: 14, color: Colors.grey),
           ),
           const SizedBox(height: 24),
-          // CPU Selector
+
+          // Component selectors
           _buildComponentSelector(
             'CPU',
             Icons.memory,
@@ -259,15 +290,13 @@ class _PCBuilderScreenState extends State<PCBuilderScreen> {
             selectedCPU,
             (value) => setState(() => selectedCPU = value),
           ),
-          // Motherboard Selector
           _buildComponentSelector(
             'Motherboard',
-            Icons.memory,
+            Icons.developer_board,
             PCComponentData.motherboards,
             selectedMotherboard,
             (value) => setState(() => selectedMotherboard = value),
           ),
-          // GPU Selector
           _buildComponentSelector(
             'GPU',
             Icons.videogame_asset,
@@ -275,15 +304,13 @@ class _PCBuilderScreenState extends State<PCBuilderScreen> {
             selectedGPU,
             (value) => setState(() => selectedGPU = value),
           ),
-          // RAM Selector
           _buildComponentSelector(
             'RAM',
-            Icons.memory,
+            Icons.sd_storage,
             PCComponentData.rams,
             selectedRAM,
             (value) => setState(() => selectedRAM = value),
           ),
-          // Storage Selector
           _buildComponentSelector(
             'Storage',
             Icons.storage,
@@ -291,7 +318,6 @@ class _PCBuilderScreenState extends State<PCBuilderScreen> {
             selectedStorage,
             (value) => setState(() => selectedStorage = value),
           ),
-          // Power Supply Selector
           _buildComponentSelector(
             'Power Supply',
             Icons.power,
@@ -299,29 +325,94 @@ class _PCBuilderScreenState extends State<PCBuilderScreen> {
             selectedPowerSupply,
             (value) => setState(() => selectedPowerSupply = value),
           ),
-          // Case Selector
           _buildComponentSelector(
             'Case',
-            Icons.folder,
+            Icons.computer,
             PCComponentData.cases,
             selectedCase,
             (value) => setState(() => selectedCase = value),
           ),
+
           const SizedBox(height: 24),
+
           // Summary Card
           _buildSummaryCard(),
+
           const SizedBox(height: 16),
-          // Build PC Button
+
+          // Check Compatibility Button
+          FilledButton.tonalIcon(
+            onPressed: _hasAnySelection ? _checkCompatibility : null,
+            icon: const Icon(Icons.verified_user),
+            label: const Text('Check Compatibility'),
+            style: FilledButton.styleFrom(
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              textStyle: const TextStyle(fontSize: 16),
+            ),
+          ),
+          const SizedBox(height: 12),
+
+          // Build PC Button — disabled until compatibility passes
           ElevatedButton.icon(
-            onPressed: _savePCBuild,
+            onPressed: canSave ? _savePCBuild : null,
             icon: const Icon(Icons.check),
-            label: const Text('Build PC'),
+            label: Text(
+              canSave
+                  ? 'Build PC'
+                  : _lastResult == null
+                      ? 'Build PC (Check Compatibility First)'
+                      : 'Build PC (Fix Errors First)',
+            ),
             style: ElevatedButton.styleFrom(
               padding: const EdgeInsets.symmetric(vertical: 16),
               textStyle: const TextStyle(fontSize: 16),
             ),
           ),
           const SizedBox(height: 24),
+        ],
+      ),
+    );
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Small inline widgets
+// -----------------------------------------------------------------------------
+
+/// A compact badge showing the compatibility status in the summary card.
+class _CompatibilityBadge extends StatelessWidget {
+  const _CompatibilityBadge({required this.result});
+
+  final CompatibilityResult result;
+
+  @override
+  Widget build(BuildContext context) {
+    final bool ok = result.isCompatible;
+    final Color color = ok ? Colors.green : Theme.of(context).colorScheme.error;
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.15),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            ok ? Icons.check_circle : Icons.cancel,
+            size: 16,
+            color: color,
+          ),
+          const SizedBox(width: 4),
+          Text(
+            ok ? 'Compatible' : 'Incompatible',
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
+              color: color,
+            ),
+          ),
         ],
       ),
     );

@@ -10,4 +10,5 @@ class AppRoutes {
   static const cart = '/cart';
   static const search = '/search';
   static const productDetail = '/product';
+  static const favorites = '/favorites';
 }

@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'core/theme/theme_provider.dart';
 import 'features/auth/logic/auth_provider.dart';
 import 'features/cart/logic/cart_provider.dart';
+import 'features/catalog/logic/favorites_provider.dart';
 import 'features/profile/logic/profile_provider.dart';
 
 import 'core/theme/app_theme.dart';
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => ProfileProvider()),
         ChangeNotifierProvider(create: (_) => CartProvider()),
+        ChangeNotifierProvider(create: (_) => FavoritesProvider()),
       ],
       child: Consumer2<AuthProvider, ThemeProvider>(
         builder: (context, authProvider, themeProvider, _) {
