@@ -1,4 +1,4 @@
-import 'package:computology/features/catalog/data/product.dart';
+import 'package:computology/core/product/product.dart';
 import 'package:computology/features/catalog/logic/favorites_provider.dart';
 import 'package:flutter_test/flutter_test.dart';
 

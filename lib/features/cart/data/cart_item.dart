@@ -1,4 +1,4 @@
-import 'package:computology/features/catalog/data/product.dart';
+import 'package:computology/core/product/product.dart';
 
 class CartItem {
   final Product product;

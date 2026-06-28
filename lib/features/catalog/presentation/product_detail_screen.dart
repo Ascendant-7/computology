@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:computology/features/catalog/data/product.dart';
+import 'package:computology/core/product/product.dart';
 import 'package:computology/features/cart/logic/cart_provider.dart';
 import 'package:computology/features/catalog/logic/favorites_provider.dart';
 
@@ -71,7 +71,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         child: Image.network(
                           images[idx],
                           fit: BoxFit.cover,
-                          errorBuilder: (c, e, s) => const Icon(Icons.broken_image),
+                          errorBuilder: (c, e, s) =>
+                              const Icon(Icons.broken_image),
                         ),
                       ),
                     ),
@@ -84,14 +85,20 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             // Tag
             if ((widget.product.tags ?? []).isNotEmpty)
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 6,
+                ),
                 decoration: BoxDecoration(
                   color: Colors.teal.withValues(alpha: 0.08),
                   borderRadius: BorderRadius.circular(6),
                 ),
                 child: Text(
                   widget.product.tags!.first,
-                  style: theme.textTheme.labelSmall?.copyWith(color: Colors.teal[800], fontWeight: FontWeight.w700),
+                  style: theme.textTheme.labelSmall?.copyWith(
+                    color: Colors.teal[800],
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
               ),
 
@@ -100,13 +107,20 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             // Title
             Text(
               widget.product.name,
-              style: theme.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
+              style: theme.textTheme.headlineSmall?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
             ),
             const SizedBox(height: 8),
 
             // Short description
             if (widget.product.description != null)
-              Text(widget.product.description!, style: theme.textTheme.bodyMedium?.copyWith(color: Colors.black54)),
+              Text(
+                widget.product.description!,
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: Colors.black54,
+                ),
+              ),
 
             const SizedBox(height: 12),
 
@@ -116,16 +130,31 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               children: [
                 Text(
                   '\$${widget.product.price.toStringAsFixed(2)}',
-                  style: theme.textTheme.headlineMedium?.copyWith(color: Colors.teal[800], fontWeight: FontWeight.bold),
+                  style: theme.textTheme.headlineMedium?.copyWith(
+                    color: Colors.teal[800],
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 const SizedBox(width: 12),
                 if (widget.product.originalPrice != null)
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('\$${widget.product.originalPrice!.toStringAsFixed(2)}', style: theme.textTheme.bodySmall?.copyWith(decoration: TextDecoration.lineThrough, color: Colors.black45)),
+                      Text(
+                        '\$${widget.product.originalPrice!.toStringAsFixed(2)}',
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          decoration: TextDecoration.lineThrough,
+                          color: Colors.black45,
+                        ),
+                      ),
                       const SizedBox(height: 4),
-                      Text('SPECIAL LAUNCH PRICE', style: theme.textTheme.labelSmall?.copyWith(color: Colors.teal[700], fontWeight: FontWeight.w600)),
+                      Text(
+                        'SPECIAL LAUNCH PRICE',
+                        style: theme.textTheme.labelSmall?.copyWith(
+                          color: Colors.teal[700],
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                     ],
                   ),
               ],
@@ -135,7 +164,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
             // Technical specs card
             Card(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
               elevation: 0,
               child: Padding(
                 padding: const EdgeInsets.all(12),
@@ -146,20 +177,37 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       children: [
                         const Icon(Icons.list_alt_outlined, size: 20),
                         const SizedBox(width: 8),
-                        Text('Technical Specs', style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
+                        Text(
+                          'Technical Specs',
+                          style: theme.textTheme.titleMedium?.copyWith(
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
                       ],
                     ),
                     const SizedBox(height: 12),
-                    ...?widget.product.specs?.entries.map((e) => Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 6),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(e.key, style: theme.textTheme.bodySmall?.copyWith(color: Colors.black54)),
-                              Text(e.value, style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w700)),
-                            ],
-                          ),
-                        )),
+                    ...?widget.product.specs?.entries.map(
+                      (e) => Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 6),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              e.key,
+                              style: theme.textTheme.bodySmall?.copyWith(
+                                color: Colors.black54,
+                              ),
+                            ),
+                            Text(
+                              e.value,
+                              style: theme.textTheme.bodyMedium?.copyWith(
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -172,9 +220,16 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               children: [
                 Expanded(
                   child: ElevatedButton.icon(
-                    icon: const Icon(Icons.shopping_cart_outlined, color: Colors.white),
+                    icon: const Icon(
+                      Icons.shopping_cart_outlined,
+                      color: Colors.white,
+                    ),
                     label: const Text('Add to Cart'),
-                    style: ElevatedButton.styleFrom(backgroundColor: Colors.teal[800], foregroundColor: Colors.white, padding: const EdgeInsets.symmetric(vertical: 14)),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.teal[800],
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                    ),
                     onPressed: () {
                       context.read<CartProvider>().addProduct(widget.product);
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -196,7 +251,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     final isFav = favProvider.isFavorite(widget.product.id);
                     return OutlinedButton(
                       onPressed: () {
-                        final added = favProvider.toggleFavorite(widget.product);
+                        final added = favProvider.toggleFavorite(
+                          widget.product,
+                        );
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text(

@@ -1,5 +1,5 @@
+import 'package:computology/core/product/product.dart';
 import 'package:flutter/material.dart';
-import 'package:computology/features/catalog/data/product.dart';
 
 /// Manages the user's favorite (wishlist) products.
 ///

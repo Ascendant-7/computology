@@ -1,5 +1,6 @@
 import 'package:computology/core/navigation/app_router.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:provider/provider.dart';
 
 import 'core/theme/theme_provider.dart';
@@ -15,27 +16,28 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => ThemeProvider()),
-        ChangeNotifierProvider(create: (_) => AuthProvider()),
-        ChangeNotifierProvider(create: (_) => ProfileProvider()),
-        ChangeNotifierProvider(create: (_) => CartProvider()),
-        ChangeNotifierProvider(create: (_) => FavoritesProvider()),
-      ],
-      child: Consumer2<AuthProvider, ThemeProvider>(
-        builder: (context, authProvider, themeProvider, _) {
-          final router = createGoRouter(authProvider);
-          return MaterialApp.router(
-            title: "Computology",
-            debugShowCheckedModeBanner: false,
-            theme: AppTheme.lightTheme(),
-            darkTheme: AppTheme.darkTheme(),
-            themeMode: themeProvider.themeMode,
-            routerConfig: router,
-          );
-        },
+    return ProviderScope(
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => ThemeProvider()),
+          ChangeNotifierProvider(create: (_) => AuthProvider()),
+          ChangeNotifierProvider(create: (_) => ProfileProvider()),
+          ChangeNotifierProvider(create: (_) => CartProvider()),
+          ChangeNotifierProvider(create: (_) => FavoritesProvider()),
+        ],
+        child: Consumer2<AuthProvider, ThemeProvider>(
+          builder: (context, authProvider, themeProvider, _) {
+            final router = createGoRouter(authProvider);
+            return MaterialApp.router(
+              title: 'Computology',
+              debugShowCheckedModeBanner: false,
+              theme: AppTheme.lightTheme(),
+              darkTheme: AppTheme.darkTheme(),
+              themeMode: themeProvider.themeMode,
+              routerConfig: router,
+            );
+          },
+        ),
       ),
     );
   }

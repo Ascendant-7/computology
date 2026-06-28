@@ -11,4 +11,5 @@ class AppRoutes {
   static const search = '/search';
   static const productDetail = '/product';
   static const favorites = '/favorites';
+  static const dashboard = '/dashboard';
 }

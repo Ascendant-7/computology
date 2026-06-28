@@ -78,6 +78,13 @@ class ProfileScreen extends StatelessWidget {
                     onTap: () {},
                   ),
                   ProfileMenuItem(
+                    icon: Icons.monitor,
+                    label: 'Admin Dashboard',
+                    onTap: () {
+                      context.push(AppRoutes.dashboard);
+                    },
+                  ),
+                  ProfileMenuItem(
                     icon: Icons.logout,
                     label: 'Logout',
                     onTap: () async {

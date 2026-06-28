@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:computology/features/catalog/data/product.dart';
+import 'package:computology/core/product/product.dart';
 import 'package:go_router/go_router.dart';
 import '../utils/app_constants.dart';
 
@@ -53,7 +53,10 @@ class ProductCard extends StatelessWidget {
               width: double.infinity,
               child: OutlinedButton(
                 onPressed: () async {
-                  final result = await context.push<String>('/product', extra: product);
+                  final result = await context.push<String>(
+                    '/product',
+                    extra: product,
+                  );
                   if (!context.mounted) return;
                   if (result == 'cart') {
                     context.go('/cart');
