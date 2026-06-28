@@ -1,17 +1,9 @@
-import 'dart:io';
-
-import 'package:computology/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart' show kDebugMode;
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-class FirebaseService {
-  static Future<void> init() async {
-    if (kDebugMode && Platform.environment.containsKey('FLUTTER_TEST')) {
-      return;
-    }
+part 'firebase_service.g.dart';
 
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform
-    );
-  }
+@riverpod
+FirebaseApp firebaseApp(Ref ref) {
+  return Firebase.app();
 }

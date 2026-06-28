@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:computology/features/catalog/data/category.dart';
-import 'package:computology/features/catalog/data/product.dart';
+import 'package:computology/core/product/product.dart';
 import 'package:computology/features/profile/data/user_profile.dart';
 
 class MockData {
@@ -49,7 +49,7 @@ class MockData {
       id: 'p2',
       name: 'Apple MacBook Pro 14',
       imageUrl:
-          'https://www.apple.com/newsroom/images/2025/10/apple-unveils-new-14-inch-macbook-pro-powered-by-the-m5-chip/tile/Apple-MacBook-Pro-14-in-hero-251015-lp.jpg.news_app_ed.jpg',
+          'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       price: 1999.0,
       rating: 4.9,
       category: 'Laptops',
@@ -77,7 +77,6 @@ class MockData {
   static const UserProfile defaultProfile = UserProfile(
     fullName: 'Taylor Morgan',
     email: 'taylor.morgan@computology.com',
-    photoUrl:
-        'https://avatars.githubusercontent.com/u/152673822?v=4',
+    photoUrl: 'https://avatars.githubusercontent.com/u/152673822?v=4',
   );
 }

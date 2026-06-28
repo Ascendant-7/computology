@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 
 import 'package:computology/core/network/mock_data.dart';
-import 'package:computology/features/catalog/data/product.dart';
+import 'package:computology/core/product/product.dart';
 import 'package:computology/core/widgets/product_card.dart';
 
 class SearchPlaceholderScreen extends StatefulWidget {
   const SearchPlaceholderScreen({super.key});
 
   @override
-  State<SearchPlaceholderScreen> createState() => _SearchPlaceholderScreenState();
+  State<SearchPlaceholderScreen> createState() =>
+      _SearchPlaceholderScreenState();
 }
 
 class _SearchPlaceholderScreenState extends State<SearchPlaceholderScreen> {
@@ -21,7 +22,9 @@ class _SearchPlaceholderScreenState extends State<SearchPlaceholderScreen> {
     if (_query.trim().isEmpty) return _allProducts;
     final q = _query.toLowerCase();
     return _allProducts.where((p) {
-      return p.name.toLowerCase().contains(q) || p.category.toLowerCase().contains(q) || (p.tags ?? []).any((t) => t.toLowerCase().contains(q));
+      return p.name.toLowerCase().contains(q) ||
+          p.category.toLowerCase().contains(q) ||
+          (p.tags ?? []).any((t) => t.toLowerCase().contains(q));
     }).toList();
   }
 
@@ -62,7 +65,10 @@ class _SearchPlaceholderScreenState extends State<SearchPlaceholderScreen> {
                       : null,
                   filled: true,
                   fillColor: Theme.of(context).cardColor,
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide.none,
+                  ),
                 ),
               ),
             ),
@@ -72,11 +78,18 @@ class _SearchPlaceholderScreenState extends State<SearchPlaceholderScreen> {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         child: results.isEmpty
-            ? Center(child: Text('No results found for "$_query"', style: Theme.of(context).textTheme.bodyMedium))
+            ? Center(
+                child: Text(
+                  'No results found for "$_query"',
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+              )
             : GridView.builder(
                 itemCount: results.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: MediaQuery.of(context).size.width > 600 ? 3 : 2,
+                  crossAxisCount: MediaQuery.of(context).size.width > 600
+                      ? 3
+                      : 2,
                   crossAxisSpacing: 12,
                   mainAxisSpacing: 12,
                   childAspectRatio: 0.7,
