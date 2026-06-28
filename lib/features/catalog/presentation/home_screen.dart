@@ -22,9 +22,12 @@ class HomeScreen extends StatelessWidget {
                 color: Theme.of(context).colorScheme.primaryContainer,
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: Icon(
-                Icons.memory,
-                color: Theme.of(context).colorScheme.onPrimaryContainer,
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxHeight: 24, maxWidth: 24),
+                child: Image.asset(
+                  'assets/icon/app_icon.png',
+                  fit: BoxFit.contain,
+                ),
               ),
             ),
             const SizedBox(width: 12),

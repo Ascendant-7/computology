@@ -1,6 +1,7 @@
 import 'package:computology/core/navigation/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import 'core/theme/theme_provider.dart';
@@ -11,8 +12,20 @@ import 'features/profile/logic/profile_provider.dart';
 
 import 'core/theme/app_theme.dart';
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<StatefulWidget> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  GoRouter? _router;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,14 +40,14 @@ class MyApp extends StatelessWidget {
         ],
         child: Consumer2<AuthProvider, ThemeProvider>(
           builder: (context, authProvider, themeProvider, _) {
-            final router = createGoRouter(authProvider);
+            _router ??= createGoRouter(authProvider);
             return MaterialApp.router(
               title: 'Computology',
               debugShowCheckedModeBanner: false,
               theme: AppTheme.lightTheme(),
               darkTheme: AppTheme.darkTheme(),
               themeMode: themeProvider.themeMode,
-              routerConfig: router,
+              routerConfig: _router!,
             );
           },
         ),
