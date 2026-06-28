@@ -1,14 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:computology/core/network/mock_data.dart';
 import 'package:computology/core/utils/app_constants.dart';
+import 'package:computology/core/utils/app_routes.dart';
 import 'package:computology/core/widgets/banner_carousel.dart';
 import 'package:computology/core/widgets/category_chip.dart';
 import 'package:computology/core/widgets/product_card.dart';
 import 'package:computology/core/widgets/section_header.dart';
+import 'package:computology/features/catalog/data/category.dart';
+import 'package:computology/features/catalog/data/product.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  String? _selectedCategoryId;
+
+  List<Product> get _filteredProducts {
+    if (_selectedCategoryId == null) return MockData.featuredProducts;
+    return MockData.featuredProducts
+        .where((p) => p.category.toLowerCase() == _selectedCategoryId!.toLowerCase())
+        .toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +50,7 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
         actions: [
-          IconButton(icon: const Icon(Icons.search), onPressed: () {}),
+          IconButton(icon: const Icon(Icons.search), onPressed: () => context.go(AppRoutes.search)),
           IconButton(
             icon: const Icon(Icons.notifications_none),
             onPressed: () {},
@@ -40,91 +58,96 @@ class HomeScreen extends StatelessWidget {
           const SizedBox(width: 8),
         ],
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppConstants.pagePadding,
-          vertical: 12,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(24),
-                gradient: LinearGradient(
-                  colors: [
-                    Theme.of(context).colorScheme.primaryContainer,
-                    Theme.of(context).colorScheme.secondaryContainer,
-                  ],
-                ),
+      body: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: AppConstants.pagePadding),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.surface,
+              border: Border(
+                bottom: BorderSide(color: Theme.of(context).colorScheme.outlineVariant.withValues(alpha: 0.5)),
+              ),
+            ),
+            child: SizedBox(
+              height: 42,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: [
+                  GestureDetector(
+                    onTap: () => setState(() => _selectedCategoryId = null),
+                    child: CategoryChip(
+                      category: const Category(id: 'all', name: 'All', icon: Icons.grid_view),
+                      isSelected: _selectedCategoryId == null,
+                    ),
+                  ),
+                  const SizedBox(width: 20),
+                  ...MockData.categories.map((cat) => Padding(
+                    padding: const EdgeInsets.only(right: 20),
+                    child: GestureDetector(
+                      onTap: () => setState(() => _selectedCategoryId = cat.id),
+                      child: CategoryChip(category: cat, isSelected: _selectedCategoryId == cat.id),
+                    ),
+                  )),
+                ],
+              ),
+            ),
+          ),
+          Expanded(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppConstants.pagePadding,
+                vertical: 12,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Build your dream setup',
-                    style: Theme.of(context).textTheme.headlineSmall,
+                  BannerCarousel(images: MockData.bannerImages),
+                  const SizedBox(height: 24),
+                  const SectionHeader(title: 'Featured Products'),
+                  const SizedBox(height: 12),
+                  LayoutBuilder(
+                    builder: (context, constraints) {
+                      int crossAxisCount = 2;
+                      if (constraints.maxWidth >= 900) {
+                        crossAxisCount = 4;
+                      } else if (constraints.maxWidth >= 600) {
+                        crossAxisCount = 3;
+                      }
+
+                      final products = _filteredProducts;
+
+                      if (products.isEmpty) {
+                        return Center(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 48),
+                            child: Text('No products in this category.',
+                                style: Theme.of(context).textTheme.bodyLarge),
+                          ),
+                        );
+                      }
+
+                      return GridView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: products.length,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: crossAxisCount,
+                          mainAxisSpacing: 16,
+                          crossAxisSpacing: 16,
+                          childAspectRatio: 0.62,
+                        ),
+                        itemBuilder: (context, index) {
+                          return ProductCard(product: products[index]);
+                        },
+                      );
+                    },
                   ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Curated picks for creators, gamers, and pros.',
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
+                  const SizedBox(height: 32),
                 ],
               ),
             ),
-            const SizedBox(height: 20),
-            BannerCarousel(images: MockData.bannerImages),
-            const SizedBox(height: 24),
-            const SectionHeader(title: 'Categories'),
-            const SizedBox(height: 12),
-            SizedBox(
-              height: 56,
-              child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                itemCount: MockData.categories.length,
-                separatorBuilder: (_, _) => const SizedBox(width: 12),
-                itemBuilder: (context, index) {
-                  final category = MockData.categories[index];
-                  return CategoryChip(category: category);
-                },
-              ),
-            ),
-            const SizedBox(height: 24),
-            const SectionHeader(title: 'Featured Products'),
-            const SizedBox(height: 12),
-            LayoutBuilder(
-              builder: (context, constraints) {
-                int crossAxisCount = 2;
-                if (constraints.maxWidth >= 900) {
-                  crossAxisCount = 4;
-                } else if (constraints.maxWidth >= 600) {
-                  crossAxisCount = 3;
-                }
-
-                return GridView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: MockData.featuredProducts.length,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: crossAxisCount,
-                    mainAxisSpacing: 16,
-                    crossAxisSpacing: 16,
-                    childAspectRatio: 0.62,
-                  ),
-                  itemBuilder: (context, index) {
-                    return ProductCard(
-                      product: MockData.featuredProducts[index],
-                    );
-                  },
-                );
-              },
-            ),
-            const SizedBox(height: 32),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

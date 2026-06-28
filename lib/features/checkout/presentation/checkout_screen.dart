@@ -8,9 +8,29 @@ import 'package:computology/core/widgets/primary_button.dart';
 import 'package:computology/core/widgets/section_header.dart';
 import 'package:computology/features/cart/logic/cart_provider.dart';
 import 'package:computology/features/cart/widgets/summary_row.dart';
+import 'package:computology/features/orders/data/order.dart';
+import 'package:computology/features/orders/logic/order_provider.dart';
 
-class CheckoutScreen extends StatelessWidget {
+enum PaymentMethod {
+  creditCard('Credit Card', Icons.credit_card),
+  paypal('PayPal', Icons.paypal),
+  applePay('Apple Pay', Icons.phone_iphone),
+  googlePay('Google Pay', Icons.payments);
+
+  final String label;
+  final IconData icon;
+  const PaymentMethod(this.label, this.icon);
+}
+
+class CheckoutScreen extends StatefulWidget {
   const CheckoutScreen({super.key});
+
+  @override
+  State<CheckoutScreen> createState() => _CheckoutScreenState();
+}
+
+class _CheckoutScreenState extends State<CheckoutScreen> {
+  PaymentMethod? _selectedMethod;
 
   @override
   Widget build(BuildContext context) {
@@ -111,6 +131,53 @@ class CheckoutScreen extends StatelessWidget {
                     ),
                   )),
                   const SizedBox(height: 16),
+                  const SectionHeader(title: 'Payment method'),
+                  const SizedBox(height: 12),
+                  Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        children: PaymentMethod.values.map((method) {
+                          final selected = _selectedMethod == method;
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 8),
+                            child: InkWell(
+                              borderRadius: BorderRadius.circular(12),
+                              onTap: () => setState(() => _selectedMethod = method),
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12),
+                                  border: Border.all(
+                                    color: selected ? theme.colorScheme.primary : theme.colorScheme.outlineVariant,
+                                    width: selected ? 2 : 1,
+                                  ),
+                                  color: selected ? theme.colorScheme.primaryContainer.withValues(alpha: 0.3) : null,
+                                ),
+                                child: Row(
+                                  children: [
+                                    Icon(method.icon, color: selected ? theme.colorScheme.primary : null),
+                                    const SizedBox(width: 16),
+                                    Expanded(
+                                      child: Text(
+                                        method.label,
+                                        style: theme.textTheme.bodyLarge?.copyWith(
+                                          fontWeight: selected ? FontWeight.w600 : FontWeight.normal,
+                                        ),
+                                      ),
+                                    ),
+                                    if (selected)
+                                      Icon(Icons.check_circle, color: theme.colorScheme.primary),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
                   const SectionHeader(title: 'Order summary'),
                   const SizedBox(height: 12),
                   Card(
@@ -131,17 +198,30 @@ class CheckoutScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 28),
                   PrimaryButton(
-                    label: 'Place Order',
-                    onPressed: () {
-                      cart.clearCart();
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: const Text('Order placed successfully!'),
-                          duration: const Duration(seconds: 2),
-                        ),
-                      );
-                      context.go(AppRoutes.home);
-                    },
+                    label: _selectedMethod != null
+                        ? 'Place Order (${_selectedMethod!.label})'
+                        : 'Select a payment method',
+                    onPressed: _selectedMethod != null
+                        ? () {
+                            final order = Order(
+                              id: DateTime.now().millisecondsSinceEpoch.toString(),
+                              items: List.from(cart.items),
+                              total: cart.total,
+                              paymentMethod: _selectedMethod!.label,
+                              status: OrderStatus.pending,
+                              createdAt: DateTime.now(),
+                            );
+                            context.read<OrderProvider>().addOrder(order);
+                            cart.clearCart();
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Order placed successfully via ${_selectedMethod!.label}!'),
+                                duration: const Duration(seconds: 2),
+                              ),
+                            );
+                            context.go(AppRoutes.home);
+                          }
+                        : null,
                   ),
                   const SizedBox(height: 24),
                 ],

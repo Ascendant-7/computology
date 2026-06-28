@@ -3,25 +3,33 @@ import 'package:flutter/material.dart';
 import 'package:computology/features/catalog/data/category.dart';
 
 class CategoryChip extends StatelessWidget {
-  const CategoryChip({super.key, required this.category});
+  const CategoryChip({super.key, required this.category, this.isSelected = false});
 
   final Category category;
+  final bool isSelected;
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 6),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surfaceContainerHighest,
-        borderRadius: BorderRadius.circular(18),
+        border: Border(
+          bottom: BorderSide(
+            color: isSelected ? colorScheme.primary : Colors.transparent,
+            width: 2.5,
+          ),
+        ),
       ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(category.icon, size: 18),
-          const SizedBox(width: 8),
-          Text(category.name),
-        ],
+      child: Text(
+        category.name,
+        style: TextStyle(
+          fontSize: 15,
+          color: isSelected ? colorScheme.primary : colorScheme.onSurfaceVariant,
+          fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+        ),
       ),
     );
   }

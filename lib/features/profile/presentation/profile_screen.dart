@@ -70,7 +70,7 @@ class ProfileScreen extends StatelessWidget {
                   ProfileMenuItem(
                     icon: Icons.history,
                     label: 'Order History',
-                    onTap: () {},
+                    onTap: () => context.push(AppRoutes.orderHistory),
                   ),
                   ProfileMenuItem(
                     icon: Icons.settings,

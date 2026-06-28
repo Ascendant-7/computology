@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
+import 'package:computology/features/cart/logic/cart_provider.dart';
+import 'package:computology/features/catalog/data/product.dart';
 import 'package:computology/features/pc_builder/data/pc_component.dart';
 import 'package:computology/features/pc_builder/data/pc_component_data.dart';
 import 'package:computology/features/pc_builder/logic/compatibility_service.dart';
@@ -87,12 +91,65 @@ class _PCBuilderScreenState extends State<PCBuilderScreen> with SingleTickerProv
     );
   }
 
+  List<PCComponent> _getSelectedComponents() {
+    return [
+      ?selectedCPU,
+      ?selectedMotherboard,
+      ?selectedGPU,
+      ?selectedRAM,
+      ?selectedStorage,
+      ?selectedPowerSupply,
+      ?selectedCase,
+    ];
+  }
+
+  String _buildName() {
+    if (selectedCPU != null) {
+      return '${selectedCPU!.name} PC Build';
+    }
+    return 'Custom PC Build';
+  }
+
+  String _buildImageUrl() {
+    return 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=400&q=80';
+  }
+
+  Product _buildPCProduct() {
+    final components = _getSelectedComponents();
+    final double total = _calculateTotalPrice();
+
+    return Product(
+      id: 'pc_build_${DateTime.now().millisecondsSinceEpoch}',
+      name: _buildName(),
+      imageUrl: _buildImageUrl(),
+      price: total,
+      rating: 0.0,
+      category: 'PC Builder',
+      description: components.map((c) => '• ${c.name} — \$${c.price.toStringAsFixed(2)}').join('\n'),
+      specs: {
+        for (final c in components)
+          c.category[0].toUpperCase() + c.category.substring(1): c.name,
+      },
+      tags: ['PC_BUILDER'],
+    );
+  }
+
   void _savePCBuild() {
+    final components = _getSelectedComponents();
+    if (components.isEmpty) return;
+
+    final cart = context.read<CartProvider>();
+    cart.addProduct(_buildPCProduct());
+
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('PC Build Saved Successfully!'),
-        duration: Duration(seconds: 2),
+      SnackBar(
+        content: const Text('PC Build added to cart!'),
+        duration: const Duration(seconds: 2),
         backgroundColor: Colors.green,
+        action: SnackBarAction(
+          label: 'View Cart',
+          onPressed: () => context.push('/cart'),
+        ),
       ),
     );
   }
